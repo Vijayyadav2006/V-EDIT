@@ -1,0 +1,35 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "build",
+			"command": "dotnet",
+			"type": "shell",
+			"args": [
+				"build",
+				"/property:GenerateFullPaths=true",
+				"/consoleloggerparameters:NoSummary"
+			],
+			"group": "build",
+			"presentation": {
+				"reveal": "silent"
+			},
+			"problemMatcher": "$msCompile"
+		},
+		{
+			"type": "shell",
+			"label": "npm uninstall babel-jest",
+			"command": "npm",
+			"args": [
+				"uninstall",
+				"babel-jest"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/client"
+			},
+			"presentation": {
+				"reveal": "silent"
+			}
+		}
+	]
+}
