@@ -1,9 +1,16 @@
+<<<<<<< HEAD
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
 /node_modules
 /.pnp
 .pnp.js
+
+<<<<<<< HEAD
+# Your changes
+=======
+# Remote changes
+>>>>>>> main
 
 # testing
 /coverage
@@ -21,3 +28,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+=======
+node_modules
+>>>>>>> 0d3ae09537c82e07395d044eca1b5ce98e573a7e
