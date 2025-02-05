@@ -9,26 +9,22 @@ import { toast } from "react-hot-toast";
 import { initSocket } from "../socket";
 
 function EditorPage({ onCodeChange }) {
-  const { roomId } = useParams(); // Extract roomId from URL parameters
+  const { roomId } = useParams();
   const [clients, setClients] = useState([]);
-  const codeRef = useRef(null);
+  const [userInput, setUserInput] = useState("");
+  const [output, setOutput] = useState("");
+
   const location = useLocation();
   const navigate = useNavigate();
   const [language, setLanguage] = useState("c");
   const editorRef = useRef(null);
-  const socketRef = useRef(null); // Ensure socketRef is defined
-
-  // Check if location.state is available
-  useEffect(() => {
-    if (!location.state) {
-      navigate('/');
-      return;
-    }
-  }, [location.state, navigate]);
+  const socketRef = useRef(null);
+  const [typing, setTyping] = useState("");
+  const username = location.state?.username;
 
   useEffect(() => {
     const handleError = (e) => {
-      console.log('socket error=>', e);
+      console.log('socket error =>', e);
       toast.error("Socket Connection failed");
       navigate('/');
     };
@@ -38,10 +34,14 @@ function EditorPage({ onCodeChange }) {
       socketRef.current.on('connect_error', handleError);
       socketRef.current.on('connect_failed', handleError);
 
-      // Emit join event with roomId and username
+      socketRef.current.on("userTyping", ({ username }) => {
+        setTyping(username);
+        setTimeout(() => setTyping(""), 1500);
+      });
+
       socketRef.current.emit("join", {
         roomId,
-        username: location.state?.username,
+        username,
       });
 
       socketRef.current.on("joined", ({ clients, username, socketId, code }) => {
@@ -49,12 +49,11 @@ function EditorPage({ onCodeChange }) {
           toast.success(`${username} joined`);
         }
         setClients(clients);
-        
-        // Send the current code to the new user
+
         const currentCode = editorRef.current.getSession().getValue();
         socketRef.current.emit("code-change", {
           roomId,
-          code: currentCode, // Send the current code
+          code: currentCode,
           senderSocketId: socketRef.current.id,
         });
       });
@@ -64,14 +63,17 @@ function EditorPage({ onCodeChange }) {
         setClients((prev) => prev.filter((client) => client.socketId !== socketId));
       });
 
-      // Listen for the code change event
       socketRef.current.on("code-change", (data) => {
         const { code, senderSocketId } = data;
         if (socketRef.current.id !== senderSocketId) {
           const editor = editorRef.current;
           const currentPosition = editor.getCursorPosition();
-          editor.session.setValue(code); // Set the code in the editor
-          editor.moveCursorToPosition(currentPosition); // Maintain cursor position
+          const currentCode = editor.getValue();
+
+          if (currentCode !== code) {
+            editor.session.setValue(code);
+            editor.moveCursorToPosition(currentPosition);
+          }
         }
       });
     };
@@ -82,14 +84,15 @@ function EditorPage({ onCodeChange }) {
       socketRef.current.disconnect();
       socketRef.current.off('joined');
       socketRef.current.off('left');
-      socketRef.current.off('code-change'); // Clean up the event listener
+      socketRef.current.off('code-change');
+      socketRef.current.off("userTyping");
     };
-  }, [roomId, location.state?.username, navigate]);
+  }, [roomId, username, navigate, location.state?.username]);
 
   const copyRoomId = async () => {
     try {
       await navigator.clipboard.writeText(roomId);
-      toast.success("Room id copied ");
+      toast.success("Room id copied");
     } catch (error) {
       toast.error("Failed to copy room id", error);
     }
@@ -103,6 +106,19 @@ function EditorPage({ onCodeChange }) {
     const editor = ace.edit("editor");
     editor.setTheme("ace/theme/monokai");
     editor.session.setMode("ace/mode/c_cpp");
+    editor.setOptions({
+      fontSize: "14px",
+      fontFamily: "Courier New, monospace",
+      cursorStyle: "slim",
+      showPrintMargin: false,
+      wrap: true,
+      indentedSoftWrap: false,
+      animatedScroll: true,
+    });
+
+    editor.renderer.setPadding(10);
+    editor.renderer.setScrollMargin(8, 8);
+
     editorRef.current = editor;
 
     const debounce = (func, wait) => {
@@ -115,7 +131,15 @@ function EditorPage({ onCodeChange }) {
 
     const handleChange = debounce((delta) => {
       const code = editor.session.getValue();
-      onCodeChange(code); // Call the onCodeChange function
+      onCodeChange(code);
+
+      if (delta.action === "insert" || delta.action === "remove") {
+        socketRef.current.emit("typing", {
+          roomId,
+          username,
+        });
+      }
+
       const { origin } = delta;
       if (origin !== 'setValue') {
         socketRef.current.emit('code-change', {
@@ -124,14 +148,14 @@ function EditorPage({ onCodeChange }) {
           senderSocketId: socketRef.current.id,
         });
       }
-    }, 300);
+    }, 100);
 
     editor.on("change", handleChange);
 
     return () => {
       editor.destroy();
     };
-  }, [onCodeChange]);
+  }, [onCodeChange, roomId, username]);
 
   useEffect(() => {
     changeLanguage(language);
@@ -140,17 +164,15 @@ function EditorPage({ onCodeChange }) {
   function changeLanguage(language) {
     const editor = editorRef.current;
     if (editor) {
-      if (language === "c" || language === "cpp") {
-        editor.session.setMode("ace/mode/c_cpp");
-      } else if (language === "php") {
-        editor.session.setMode("ace/mode/php");
-      } else if (language === "python") {
-        editor.session.setMode("ace/mode/python");
-      } else if (language === "node") {
-        editor.session.setMode("ace/mode/javascript");
-      } else if (language === "java") {
-        editor.session.setMode("ace/mode/java");
-      }
+      const modes = {
+        c: "ace/mode/c_cpp",
+        cpp: "ace/mode/c_cpp",
+        php: "ace/mode/php",
+        python: "ace/mode/python",
+        node: "ace/mode/javascript",
+        java: "ace/mode/java",
+      };
+      editor.session.setMode(modes[language] || "ace/mode/c_cpp");
     }
   }
 
@@ -161,11 +183,12 @@ function EditorPage({ onCodeChange }) {
       data: {
         language: language,
         code: editorRef.current.getSession().getValue(),
+        input: userInput,
       },
       success: function (response) {
-        $(".output").text(response);
+        setOutput(response);
       },
-      error: function (xhr, status, error) {
+      error: function (xhr) {
         const errorMessage = xhr.responseJSON?.message || "An error occurred while executing the code.";
         toast.error(errorMessage);
       },
@@ -175,26 +198,29 @@ function EditorPage({ onCodeChange }) {
   return (
     <div className="container-fluid vh-100">
       <div className="row h-100">
-        <div className="col-md-2 bg-dark text-light d-flex flex-column h-100" style={{ boxShadow: "2px 0px 4px rgba(0,0,0,0.1)" }}>
-          <img src="/images/logo.png" alt="v_editor_logo" className="img-fluid mx-auto" style={{ maxWidth: "150px", marginTop: "-25px" }} />
-          <hr style={{ marginTop: "-1rem" }} />
+        <div className="col-md-2 bg-dark text-light d-flex flex-column h-100">
+          <img src="/images/logo.png" alt="v_editor_logo" className="img-fluid mx-auto" />
+          <hr />
           <div className="d-flex flex-column overflow-auto">
             {clients.map((client) => (
-              <Client key={client.socketId} username={client.username} />
+              <div key={client.socketId} className={`client ${typing === client.username ? 'typing' : ''}`}>
+                <Client username={client.username} />
+                {typing === client.username && <div className="typing-indicator-box">{client.username} is typing...</div>}
+              </div>
             ))}
           </div>
           <div className="mt-auto">
             <hr />
             <button onClick={copyRoomId} className="btn btn-success">Copy Room Id</button>
-            <button onClick={leaveRoom} className="btn btn-danger mt-2 mb-10 px-5 btn-block">Lost</button>
+            <button onClick={leaveRoom} className="btn btn-danger mt-2">Leave</button>
           </div>
         </div>
 
-        <div className="col-md-10 bg-light text-light d-flex flex-column h-100" style={{ border: "2px dotted black" }}>
+        <div className="col-md-10 bg-light text-dark d-flex flex-column h-100">
           <div className="header">V EDITOR</div>
-          <div className="control-panel" >
-            Select Language: &nbsp;
-            <select id="languages" className="languages" value={language} onChange={(e) => setLanguage(e.target.value)}>
+          <div className="control-panel">
+            Select Language:&nbsp;
+            <select value={language} onChange={(e) => setLanguage(e.target.value)}>
               <option value="c">C</option>
               <option value="cpp">C++</option>
               <option value="php">PHP</option>
@@ -204,13 +230,22 @@ function EditorPage({ onCodeChange }) {
             </select>
           </div>
 
-          <div className="editor" id="editor" socketRef={socketRef} roomId={roomId} onCodeChange={(code) => codeRef.current = code}></div>
+          <div className="editor" id="editor"></div>
 
           <div className="d-flex justify-content-end p-2">
-            <button className="btn btn-success custom-run-btn" onClick={executeCode}>Run</button>
+            <button className="btn btn-success" onClick={executeCode}>Run</button>
           </div>
 
-          <div className="output"></div>
+          <div className="input-output-section">
+            <textarea
+              className="form-control"
+              placeholder="Enter input here..."
+              value={userInput}
+              onChange={(e) => setUserInput(e.target.value)}
+            ></textarea>
+
+            <pre className="output">{output}</pre>
+          </div>
         </div>
       </div>
     </div>

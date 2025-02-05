@@ -70,3 +70,16 @@ custom-editor-section {
     width: 100%;
   }
   
+  .typing-indicator {
+    color: yellow;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+
+  #editor {
+    line-height: 1.5; /* Adjust line height for cursor alignment */
+    padding: 0;       /* Remove unnecessary padding */
+    font-size: 14px;  /* Ensure consistent font size */
+    caret-color: yellow; /* Set cursor color to yellow */
+  }
+  
