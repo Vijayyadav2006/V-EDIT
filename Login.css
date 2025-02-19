@@ -1,0 +1,457 @@
+
+
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Container Styles */
+.login-container {
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh; /* Ensure it covers the full viewport height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to right, #e2e2e2, #c9d6ff); /* Background gradient */
+  animation: fadeIn 1s ease-in-out, colorChange 5s infinite alternate; /* Add fade-in and color change animation */
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.container {
+  background: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+  width: 450px;
+  padding: 2rem;
+  margin: 50px auto;
+  border-radius: 10px;
+  box-shadow: 0 20px 35px rgba(0, 0, 1, 0.9);
+  position: relative;
+  overflow: hidden;
+  animation: containerAnimation 0.8s ease-out;
+}
+
+/* Animation for the container */
+@keyframes containerAnimation {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Logo Styles */
+.logo {
+  display: block;
+  margin: 0 auto 20px; /* Center the logo and add bottom margin */
+  width: 100px; /* Adjust width as needed */
+}
+
+/* Form Title */
+.form-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  padding: 1.3rem;
+  margin-bottom: 0.4rem;
+  color: #07001f;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+  animation: titleAnimation 1s ease-out;
+}
+
+/* Animation for Form Title */
+@keyframes titleAnimation {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Input Styles */
+input {
+  color: inherit;
+  width: 100%;
+  background-color: transparent;
+  border: 1px solid #757575; /* Default border */
+  border-radius: 4px; /* Optional: Add some border radius */
+  padding-left: 1.5rem;
+  padding-top: 1rem; /* Add top padding for better spacing */
+  font-size: 15px;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Focus Input Styles */
+input:focus {
+  background-color: transparent;
+  outline: none; /* Remove outline */
+  border: 2px solid hsl(327, 90%, 28%); /* Change border color on focus */
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  animation: inputFocusAnimation 0.5s forwards;
+}
+
+/* Placeholder Style */
+input::placeholder {
+  color: #757575; /* Change placeholder color for better visibility */
+  opacity: 1; /* Ensure placeholder is fully visible */
+}
+
+/* Input Group Styles */
+.input-group {
+  padding: 1% 0;
+  position: relative;
+}
+
+/* Input Group Icon */
+.input-group i {
+  position: absolute;
+  color: black;
+  left: 10px; /* Adjust icon position */
+  top: 50%; /* Center icon vertically */
+  transform: translateY(-50%); /* Center icon vertically */
+}
+
+/* Label Styles */
+label {
+  color: #757575;
+  position: relative;
+  left: 1.2em;
+  top: -1.3em;
+  cursor: auto;
+  transition: 0.3s ease all;
+}
+
+/* Focus Label Animation */
+input:focus ~ label,
+input:not(:placeholder-shown) ~ label {
+  top: -3em;
+  color: hsl(327, 90%, 28%);
+  font-size: 15px;
+}
+
+/* Recover Text */
+.recover {
+  text-align: right;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  animation: recoverAnimation 1s ease-in-out;
+}
+
+/* Animation for Recover Text */
+@keyframes recoverAnimation {
+  0% {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Link Styles for Recover Text */
+.recover a {
+  text-decoration: none;
+  color: rgb(125, 125, 235);
+  transition: color 0.3s ease;
+}
+
+/* Hover Effect for Recover Links */
+.recover a:hover {
+  color: blue;
+  text-decoration: underline;
+}
+
+/* Button Styles */
+.login-container .btn {
+  font-size: 1.1rem;
+  padding: 10px 0; /* Increase padding for better touch target */
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  width: 100%;
+  background: rgb(125, 125, 235);
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* Hover Button Effects */
+.login-container .btn:hover {
+  background: #07001f;
+  transform: scale(1.05);
+}
+
+/* OR Text */
+.or {
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+  text-align: center;
+  font-style: italic;
+  animation: or3DAnimation 1s ease-in-out;
+  color: #07001f;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+  transform-origin: center;
+}
+
+/* 3D Animation for OR Text */
+@keyframes or3DAnimation {
+  0% {
+    opacity: 0;
+    transform: rotateY(-90deg) scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: rotateY(0deg) scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: rotateY(90deg) scale(0.8);
+  }
+}
+
+/* Hover Effect to Intensify the 3D Effect */
+.or:hover {
+  animation: or3DAnimationHover 1s ease-in-out;
+  color: rgb(125, 125, 235); /* Color on hover */
+}
+
+/* Hover Animation for OR Text */
+@keyframes or3DAnimationHover {
+  0% {
+    transform: rotateY(0deg) scale(1);
+  }
+  50% {
+    transform: rotateY(45deg) scale(1.1);
+  }
+  100% {
+    transform: rotateY(0deg) scale(1);
+  }
+}
+
+/* Social Media Icons Container */
+.icons {
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+/* Icon Styles */
+.icons i {
+  color: rgb(125, 125, 235);
+  padding: 0.8rem 1.5rem;
+  border-radius: 10px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  border: 2px solid #dfe9f5;
+  margin: 0 15px;
+  transition: 1s;
+}
+
+/* Hover Effects for Social Icons */
+.icons i:hover {
+  background: #07001f;
+  font-size: 1.6rem;
+  border: 2px solid rgb(125, 125, 235);
+  transform: rotate(360deg);
+}
+
+/* Links for Switching between Sign Up/Sign In */
+.links {
+  display: flex;
+  justify-content: center;
+  padding: 0 4rem;
+  margin-top: 0.9rem;
+  font-weight: bold;
+}
+
+/* Button Styles for Sign Up / Sign In Switch */
+button {
+  color: rgb(125, 125, 235);
+  border: none;
+  background-color: transparent;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+/* Hover Effect for Button */
+button:hover {
+  text-decoration: underline;
+  color: blue;
+}
+
+/* Alert Message */
+.alert {
+  margin-top: 1rem;
+  background-color: #d1ecf1;
+  color: #0c5460;
+  border-color: #bee5eb;
+  padding: 1rem;
+  border-radius: 5px;
+  font-weight: bold;
+  animation: messageFadeIn 1s ease-out;
+}
+
+/* Fade-in Animation for Message */
+@keyframes messageFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Input Focus Animation */
+@keyframes inputFocusAnimation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Button Click Animation */
+@keyframes buttonClick {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.btn:active {
+  animation: buttonClick 0.2s ease-in-out;
+}
+
+/* Input Error Animation */
+@keyframes inputError {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+input.error {
+  border-bottom: 2px solid red;
+  animation: inputError 0.3s ease-in-out;
+}
+
+/* Fade-in Effect for Social Icons */
+@keyframes fadeInIcons {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.icons i {
+  animation: fadeInIcons 1s ease-in-out;
+}
+
+/* Success Message Animation */
+@keyframes successMessage {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Success Message Styling */
+.success {
+  margin-top: 1rem;
+  background-color: #d4edda;
+  color: #155724;
+  border-color: #c3e6cb;
+  padding: 1rem;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+  animation: successMessage 0;
+}
+
+/* Typing Effect */
+.typing-effect {
+  border: 2px solid transparent;
+  transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.typing-effect.typing {
+  border-color: #007bff;
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+}
+
+.typing-effect.typing::placeholder {
+  color: #007bff;
+  opacity: 0.7;
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Coloring Effect */
+@keyframes colorChange {
+  0% {
+    background-color: #ff9a9e;
+  }
+  25% {
+    background-color: #fad0c4;
+  }
+  50% {
+    background-color: #fad0c4;
+  }
+  75% {
+    background-color: #ff9a9e;
+  }
+  100% {
+    background-color: #ff9a9e;
+  }
+}

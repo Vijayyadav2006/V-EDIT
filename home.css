@@ -1,0 +1,198 @@
+/* General Styles */
+body {
+  background-color: #ffffff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.home-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e2e2e2, #c9d6ff);
+  position: relative;
+}
+
+.home-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 450px;
+  padding: 2.5rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  animation: popUp 0.5s ease-out;
+}
+
+@keyframes popUp {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.home-card-body {
+  background: #f9f9f9;
+  padding: 2rem;
+  border-radius: 8px;
+}
+
+.home-logo {
+  max-width: 120px;
+  margin-bottom: 1.5rem;
+}
+
+.home-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 1.2rem;
+}
+
+.home-subtitle {
+  font-size: 1rem;
+  color: #555555;
+  margin-bottom: 1.5rem;
+}
+
+.form-control {
+  margin-bottom: 1rem;
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+}
+
+.input-group-text {
+  background-color: #6b7280;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px 0 0 6px;
+}
+
+.btn-primary {
+  background-color: #4f46e5;
+  color: #ffffff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #4338ca;
+}
+
+.btn-outline-secondary {
+  background-color: transparent;
+  border: 1px solid #6b7280;
+  color: #6b7280;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #6b7280;
+  color: #ffffff;
+}
+
+.text-primary {
+  color: #4f46e5;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.text-danger {
+  color: #ef4444;
+  font-size: 0.9rem;
+}
+
+.logout-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background-color: #ef4444;
+  color: #ffffff;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background-color: #dc2626;
+}
+
+.user-info {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #ffffff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.color-picker {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background-color: #ffffff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.color-picker label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.color-picker input[type="color"] {
+  width: 100%;
+  height: 2rem;
+  border: none;
+  cursor: pointer;
+}
+
+.typing-indicator {
+  margin-left: 10px;
+  color: #6b7280;
+  font-size: 0.9rem;
+  align-self: center;
+}
+
+@media (max-width: 768px) {
+  .home-card {
+    margin: 15px;
+    padding: 1.5rem;
+  }
+
+  .home-card-body {
+    padding: 1.5rem;
+  }
+
+  .logout-button, .user-info, .color-picker, .typing-indicator {
+    font-size: 0.8rem;
+    padding: 5px 8px;
+  }
+
+  .home-logo {
+    max-width: 100px;
+  }
+
+  .home-title {
+    font-size: 1.5rem;
+  }
+}

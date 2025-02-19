@@ -1,0 +1,245 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Custom Editor Section */
+.custom-editor-section {
+    background-color: rgb(30, 30, 30);
+    color: rgb(220, 220, 220);
+}
+
+/* Header */
+.header {
+    background: rgb(51, 51, 51);
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    padding: 4px;
+    font-family: Castellar;
+}
+
+/* Control Panel */
+.control-panel {
+    background: rgb(68, 68, 68);
+    text-align: right;
+    padding: 4px;
+    font-family: sans-serif;
+    color: rgb(220, 220, 220);
+}
+
+/* Language Selector */
+.languages {
+    background: rgb(68, 68, 68);
+    border: 1px solid gray;
+    color: rgb(220, 220, 220);
+}
+
+.language-icon {
+    font-size: 18px;
+    margin-right: 5px;
+}
+
+.language-select {
+    background: rgb(68, 68, 68);
+    color: rgb(220, 220, 220);
+    border: 1px solid rgb(204, 204, 204);
+    padding: 5px;
+    border-radius: 4px;
+}
+
+/* Theme Selector */
+.theme-selector {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.theme-selector .btn {
+    margin: 0 5px;
+}
+
+/* Editor */
+#editor {
+    height: 450px;
+    background-color: rgb(30, 30, 30);
+    overflow: auto;
+    border: 1px solid rgb(204, 204, 204);
+    font-family: monospace;
+    line-height: 1.5;
+    padding: 0;
+    font-size: 14px;
+    caret-color: yellow;
+}
+
+/* Run Button */
+.custom-run-btn {
+    background-color: rgb(76, 175, 80);
+    color: rgb(255, 255, 255);
+    border: 2px solid rgb(255, 255, 255);
+}
+
+.custom-run-btn:hover {
+    background-color: rgb(69, 160, 73);
+    border-color: rgb(69, 160, 73);
+}
+
+/* Output Section */
+.output {
+    padding: 4px;
+    border: 2px solid gray;
+    min-height: 100px;
+    width: 99%;
+    resize: none;
+    color: rgb(220, 220, 220);
+    background-color: rgb(30, 30, 30);
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 5px;
+    white-space: pre-wrap;
+}
+
+/* Ace Editor Themes */
+.ace-monokai {
+    background-color: rgb(39, 40, 34);
+    color: rgb(248, 248, 242);
+}
+
+.ace-twilight {
+    background-color: rgb(20, 20, 20);
+    color: rgb(248, 248, 248);
+}
+
+.ace-github {
+    background-color: rgb(248, 248, 248);
+    color: rgb(51, 51, 51);
+}
+
+.ace-solarized_dark {
+        background-color: rgb(0, 43, 54);
+    color: rgb(131, 148, 150);
+}
+
+.ace-solarized_light {
+    background-color: rgb(253, 246, 227);
+    color: rgb(101, 123, 131);
+}
+
+.ace-terminal {
+    background-color: rgb(0, 0, 0);
+    color: rgb(0, 255, 0);
+}
+
+.ace-tomorrow {
+    background-color: rgb(255, 255, 255);
+    color: rgb(77, 77, 76);
+}
+
+/* Ace Editor Styling */
+.ace_editor {
+    border: 1px solid rgb(204, 204, 204);
+    font-size: 14px;
+    height: 400px;
+    width: 100%;
+}
+
+/* Typing Indicator */
+.typing-indicator {
+    color: yellow;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.client.typing {
+    border: 2px solid rgb(0, 0, 255);
+}
+
+.typing-indicator-box {
+    background-color: rgb(255, 235, 59);
+    border: 1px solid rgb(204, 204, 204);
+    padding: 5px;
+    margin-top: 5px;
+    border-radius: 3px;
+}
+
+/* Audio Icon */
+.audio-icon {
+    width: 30px;
+    height: 30px;
+    border: 2px solid rgb(204, 204, 204);
+    border-radius: 50%;
+    margin-left: 10px;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.audio-icon:hover {
+    border-color: rgb(76, 175, 80);
+}
+
+.audio-on {
+    color: rgb(0, 128, 0);
+}
+
+.audio-off {
+    color: rgb(255, 0, 0);
+}
+
+/* Theme-specific styles */
+.theme-monokai {
+    background-color: rgb(39, 40, 34);
+    color: rgb(248, 248, 242);
+}
+
+.theme-twilight {
+    background-color: rgb(20, 20, 20);
+    color: rgb(248, 248, 248);
+}
+
+.theme-github {
+    background-color: rgb(248, 248, 248);
+    color: rgb(51, 51, 51);
+}
+
+.theme-solarized_dark {
+    background-color: rgb(0, 43, 54);
+    color: rgb(131, 148, 150);
+}
+
+.theme-solarized_light {
+    background-color: rgb(253, 246, 227);
+    color: rgb(101, 123, 131);
+}
+
+.theme-terminal {
+    background-color: rgb(0, 0, 0);
+    color: rgb(0, 255, 0);
+}
+
+.theme-tomorrow {
+    background-color: rgb(255, 255, 255);
+    color: rgb(77, 77, 76);
+}
+
+/* Home Background */
+.home-background {
+    background-image: url('D:\Real_time_Editor\client\public\images\background.jpg'); /* Ensure this path is correct */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 100%;
+}
+
+/* Input and Output Section */
+.input-output-section textarea {
+    height: 80px;
+    margin-bottom: 10px;
+}
