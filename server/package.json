@@ -10,6 +10,8 @@
   "author": "VIJAY YADAV",
   "license": "ISC",
   "dependencies": {
+    "@octokit/auth-oauth-app": "^8.1.2",
+    "axios": "^1.7.9",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "socket.io": "^4.8.1"
