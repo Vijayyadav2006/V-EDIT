@@ -6,12 +6,6 @@ const { Server } = require("socket.io");
 const server = http.createServer(app);
 const io = new Server(server);
 const userSocketMap = {};
-const userRoomMap = {}; // ✅ Track user's room
-
-// Get current date and time in a readable format
-const getCurrentTimestamp = () => {
-  return new Date().toLocaleString();
-};
 
 // Get all connected clients in a room
 const getAllConnectedClients = (roomId) => {
@@ -26,9 +20,10 @@ const getAllConnectedClients = (roomId) => {
 io.on("connection", (socket) => {
   socket.on("join", ({ roomId, username }) => {
     userSocketMap[socket.id] = username;
-    userRoomMap[socket.id] = roomId; // ✅ Store the room ID
-
     socket.join(roomId);
+
+
+    console.log(`${username} has joined room ${roomId}`);
     const clients = getAllConnectedClients(roomId);
 
     console.log(`[${getCurrentTimestamp()}] User '${username}' joined room '${roomId}'`);
